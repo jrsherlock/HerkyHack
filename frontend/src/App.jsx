@@ -35,17 +35,17 @@ function App() {
     setResult(null)
 
     if (!firstName || !lastName || !state) {
-      setError('Please enter your first name, last name, and state')
+      setError('Missing required identity information — please provide name and state')
       return
     }
 
     if (searchMethod === 'direct' && !hometown) {
-      setError('Please enter your hometown')
+      setError('Location data required — please specify your hometown')
       return
     }
 
     if (searchMethod === 'county' && !selectedCounty) {
-      setError('Please select your county')
+      setError('County selection required to scan database')
       return
     }
 
@@ -98,10 +98,10 @@ function App() {
         {/* Header */}
         <div className="text-center mb-8 mt-4">
           <h1 className="text-4xl sm:text-5xl font-bold text-iowa-gold mb-3 drop-shadow-lg">
-            🎓 Your Admissions Video
+            Have I Been Admitted?
           </h1>
           <p className="text-iowa-gold text-lg sm:text-xl opacity-90">
-            Check your admission status and view your personalized video
+            Check if your identity appears in the admissions database
           </p>
         </div>
 
@@ -118,22 +118,22 @@ function App() {
           {showInstructions && (
             <div className="mt-4 space-y-3 text-gray-700">
               <div className="p-3 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold mb-2">How it works:</h3>
+                <h3 className="font-semibold mb-2">How the database lookup works:</h3>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
-                  <li>Enter your first and last name</li>
-                  <li>Enter your hometown information:
+                  <li>Enter your identifying information (name and location)</li>
+                  <li>Select your search method:
                     <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Direct: If you know your city, enter it directly</li>
-                      <li>County: Not sure? Select your county to search</li>
+                      <li>Direct: Provide exact city for faster lookup</li>
+                      <li>County: Scan entire county database</li>
                     </ul>
                   </li>
-                  <li>Click "Find My Video" to check your admission</li>
-                  <li>If admitted, watch and download your personalized video!</li>
+                  <li>Click "pwn — I mean, check — admissions" to query the database</li>
+                  <li>If your identity is found: Oh no! You've been admitted!</li>
                 </ol>
               </div>
 
               <div className="p-3 bg-blue-50 rounded-lg text-sm">
-                <p className="font-semibold mb-2">💡 Tip: If you're not sure of your exact city name, use the County search method to check all cities in your county automatically.</p>
+                <p className="font-semibold mb-2">⚠️ Warning: If your name appears in the database, your identity may have been compromised... with an acceptance letter.</p>
               </div>
             </div>
           )}
@@ -290,10 +290,10 @@ function App() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Checking...
+                  Scanning database...
                 </span>
               ) : (
-                '🎓 Find My Video'
+                '🔍 pwned?'
               )}
             </button>
           </form>
@@ -310,27 +310,33 @@ function App() {
         {result && (
           <div className={result.hit_found ? 'success-box' : 'error-box'}>
             <h2 className={`text-2xl font-bold mb-4 ${result.hit_found ? 'text-green-800' : 'text-red-800'}`}>
-              {result.hit_found ? '🎉 Congratulations! You\'ve Been Admitted!' : '❌ Video Not Found'}
+              {result.hit_found ? '⚠️ Oh no — been admitted!' : '✓ Good news — no admission found'}
             </h2>
 
             <div className="space-y-3">
               {result.hit_found && (
-                <p className="text-gray-800 text-lg">
-                  Welcome to Iowa's Premium Institute of Higher Learning, <strong>{result.first_name}</strong>!
-                </p>
+                <div className="p-4 bg-orange-50 border-l-4 border-orange-500 mb-4">
+                  <p className="text-gray-800 font-semibold">
+                    Identity Compromised: <strong>{result.first_name} {result.last_name}</strong>
+                  </p>
+                  <p className="text-gray-700 text-sm mt-1">
+                    Your identity has been found in the Iowa's Premium Institute of Higher Learning admissions database.
+                    An acceptance letter may have been generated with your information.
+                  </p>
+                </div>
               )}
 
               <p className="text-gray-800">
-                <strong>Name:</strong> {result.first_name} {result.last_name}
+                <strong>Identity:</strong> {result.first_name} {result.last_name}
               </p>
               <p className="text-gray-800">
-                <strong>Hometown:</strong> {result.hometown}
+                <strong>Location Data:</strong> {result.hometown}
               </p>
 
               {result.county_searched && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    🏛️ Searched in <strong>{result.county_searched} County</strong>
+                    🔍 Database scan: <strong>{result.county_searched} County</strong>
                   </p>
                 </div>
               )}
@@ -338,7 +344,7 @@ function App() {
               {result.city_found && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    📍 Found your city: <strong>{result.city_found}</strong> (searched {result.cities_tried} of {result.total_cities} cities)
+                    📍 Located in database: <strong>{result.city_found}</strong> (scanned {result.cities_tried} of {result.total_cities} records)
                   </p>
                 </div>
               )}
@@ -346,20 +352,20 @@ function App() {
               {result.hometown_used && result.hometown_original && result.hometown_used !== result.hometown_original && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    💡 Matched using: <strong>'{result.hometown_used}'</strong>
+                    💾 Matched variation: <strong>'{result.hometown_used}'</strong>
                   </p>
                 </div>
               )}
 
               {result.hit_found && result.mp4_link && (
                 <>
-                  <div className="mt-4 p-4 bg-iowa-gold bg-opacity-10 border-2 border-iowa-gold rounded-xl">
-                    <p className="text-gray-800 font-semibold mb-2">🎥 Your Personalized Admissions Video</p>
-                    <p className="text-gray-600 text-sm">Watch your custom video message below!</p>
+                  <div className="mt-4 p-4 bg-red-50 border-2 border-red-300 rounded-xl">
+                    <p className="text-gray-800 font-semibold mb-2">⚠️ Compromised Data Preview</p>
+                    <p className="text-gray-600 text-sm">A personalized admissions video was found associated with your identity. View the compromised content below:</p>
                   </div>
 
                   {/* Video Player */}
-                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg">
+                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg border-2 border-gray-300">
                     <video controls className="w-full" preload="metadata">
                       <source src={result.mp4_link} type="video/mp4" />
                       Your browser does not support the video tag.
@@ -371,7 +377,7 @@ function App() {
                     onClick={handleDownload}
                     className="btn-secondary mt-4"
                   >
-                    💾 Download Your Video
+                    💾 Download Evidence
                   </button>
                 </>
               )}
@@ -405,8 +411,9 @@ function App() {
 
         {/* Footer */}
         <div className="text-center text-iowa-gold text-sm mt-8 opacity-75">
-          <p>Iowa's Premium Institute of Higher Learning</p>
-          <p className="mt-1">Check your admission status anytime</p>
+          <p>Have I Been Admitted?</p>
+          <p className="mt-1">Check if your identity appears in the admissions database</p>
+          <p className="mt-2 text-xs">A tongue-in-cheek tribute to Have I Been Pwned</p>
         </div>
       </div>
     </div>

@@ -1,17 +1,19 @@
-# 🎓 Your Admissions Video
+# 🔍 Have I Been Admitted?
 
-A sleek, modern, mobile-first web application that allows you to check your admission status and view your personalized admissions video from Iowa's Premium Institute of Higher Learning.
+A tongue-in-cheek web application inspired by Have I Been Pwned that lets you check if your identity appears in Iowa's Premium Institute of Higher Learning admissions database.
+
+**⚠️ Oh no!** If your name is found, your identity may have been compromised... with an acceptance letter.
 
 ## ✨ Features
 
-- **🎨 Modern Mobile-First Design**: Clean Old Gold and Black UI with smooth animations and responsive layout
-- **🔍 Easy Search**: Enter your name and hometown to check your admission status
-- **🏛️ County Search Option**: Not sure of your city? Search by county and we'll check all cities for you
-- **🎉 Personalized Experience**: Congratulatory message and personalized video if you've been admitted
-- **📹 Video Player**: Watch your custom admissions video directly in the browser
-- **💾 Easy Downloads**: Download your video to keep and share
-- **🐛 Debug Mode**: Technical details for troubleshooting (optional)
-- **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast performance
+- **🎨 HaveIBeenPwned-Inspired Design**: Dramatic security-breach aesthetic with Old Gold and Black UI
+- **🔍 Database Lookup**: Enter your identifying information to scan the admissions database
+- **🏛️ County Database Scan**: Don't know your exact city? We'll scan the entire county database
+- **⚠️ Breach Notifications**: Dramatic alerts if your identity is found (you've been admitted!)
+- **📹 Evidence Preview**: View the "compromised data" (your personalized admissions video)
+- **💾 Download Evidence**: Save proof of your identity breach (acceptance)
+- **🐛 Debug Mode**: Technical details of the database lookup (optional)
+- **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast database queries
 
 ## 🏗️ Architecture
 
@@ -73,18 +75,20 @@ Frontend will run on: **http://localhost:3000**
 
 1. **Open the app** in your browser at http://localhost:3000
 
-2. **Enter your information:**
-   - Your first name
-   - Your last name
-   - Your state (typically "IA" for Iowa)
+2. **Enter your identifying information:**
+   - First name
+   - Last name
+   - State (typically "IA" for Iowa)
 
-3. **Choose your search method:**
-   - **Direct**: If you know your city, enter it directly (e.g., "Iowa City")
-   - **County Search**: Not sure? Select your county and we'll search all cities for you
+3. **Choose database lookup method:**
+   - **Direct**: Provide exact city for faster database query
+   - **County Database Scan**: Select your county to scan all records in that region
 
-4. **Click "Find My Video"** to check your admission status
+4. **Click "🔍 pwned?"** to query the admissions database
 
-5. **If admitted:** Celebrate and watch your personalized admissions video!
+5. **Check the results:**
+   - ⚠️ **Oh no — been admitted!** Your identity was found. View the compromised data.
+   - ✓ **Good news — no admission found** You're safe... for now.
 
 ## 💡 Example Searches
 
