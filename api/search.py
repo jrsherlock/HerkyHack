@@ -1,12 +1,11 @@
-from http.server import BaseHTTPRequestHandler
 import json
 import requests
-from urllib.parse import quote, parse_qs
+from urllib.parse import quote
 import re
 import csv
 import os
 from datetime import datetime
-from typing import Optional, List
+from typing import List
 
 def generate_mp4_url(first_name: str, last_name: str, hometown: str, state: str):
     """Generate the expected MP4 URL based on the naming pattern."""
@@ -188,6 +187,7 @@ def load_iowa_counties_and_cities(csv_path="city-county-mapping.csv"):
         csv_path,
         f"../{csv_path}",
         f"../../{csv_path}",
+        os.path.join(os.path.dirname(__file__), csv_path),
         os.path.join(os.path.dirname(__file__), "..", csv_path)
     ]
 
@@ -272,102 +272,133 @@ def search_with_city_iteration(first_name: str, last_name: str, state: str, citi
         'debug_info': debug_info if debug else None
     }
 
-class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        try:
-            content_length = int(self.headers.get('Content-Length', 0))
-            post_data = self.rfile.read(content_length)
-            data = json.loads(post_data.decode('utf-8'))
+def handler(req):
+    """Vercel serverless function handler for Python runtime."""
+    # Handle CORS preflight
+    if req.method == 'OPTIONS':
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            },
+            'body': ''
+        }
 
-            first_name = data.get('first_name', '').strip()
-            last_name = data.get('last_name', '').strip()
-            state = data.get('state', '').strip()
-            hometown = data.get('hometown')
-            county = data.get('county')
-            show_debug = data.get('show_debug', False)
+    if req.method != 'POST':
+        return {
+            'statusCode': 405,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({'error': {'code': '405', 'message': 'Method not allowed'}})
+        }
 
-            if not first_name or not last_name or not state:
-                self.send_response(400)
-                self.send_header('Content-Type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-                self.wfile.write(json.dumps({
+    try:
+        # Parse request body
+        body = req.body
+        if isinstance(body, str):
+            data = json.loads(body)
+        else:
+            data = body if body else {}
+
+        first_name = data.get('first_name', '').strip()
+        last_name = data.get('last_name', '').strip()
+        state = data.get('state', '').strip()
+        hometown = data.get('hometown')
+        county = data.get('county')
+        show_debug = data.get('show_debug', False)
+
+        if not first_name or not last_name or not state:
+            return {
+                'statusCode': 400,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
                     'error': {'code': '400', 'message': 'First name, last name, and state are required'}
-                }).encode())
-                return
+                })
+            }
 
-            # County-based search
-            if county:
-                if state.upper() != "IA":
-                    self.send_response(400)
-                    self.send_header('Content-Type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({
+        # County-based search
+        if county:
+            if state.upper() != "IA":
+                return {
+                    'statusCode': 400,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({
                         'error': {'code': '400', 'message': 'County search currently only supports Iowa (IA)'}
-                    }).encode())
-                    return
+                    })
+                }
 
-                county_cities_dict, _ = load_iowa_counties_and_cities()
-                cities_in_county = county_cities_dict.get(county, [])
+            county_cities_dict, _ = load_iowa_counties_and_cities()
+            cities_in_county = county_cities_dict.get(county, [])
 
-                if not cities_in_county:
-                    self.send_response(404)
-                    self.send_header('Content-Type', 'application/json')
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({
+            if not cities_in_county:
+                return {
+                    'statusCode': 404,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({
                         'error': {'code': '404', 'message': f'No cities found for {county} County'}
-                    }).encode())
-                    return
+                    })
+                }
 
-                result = search_with_city_iteration(
-                    first_name,
-                    last_name,
-                    state,
-                    cities_in_county,
-                    debug=show_debug
-                )
-                result['county_searched'] = county
+            result = search_with_city_iteration(
+                first_name,
+                last_name,
+                state,
+                cities_in_county,
+                debug=show_debug
+            )
+            result['county_searched'] = county
 
-            # Direct hometown search
-            elif hometown:
-                result = check_admissions_hit(
-                    first_name,
-                    last_name,
-                    hometown,
-                    state,
-                    debug=show_debug
-                )
-            else:
-                self.send_response(400)
-                self.send_header('Content-Type', 'application/json')
-                self.send_header('Access-Control-Allow-Origin', '*')
-                self.end_headers()
-                self.wfile.write(json.dumps({
+        # Direct hometown search
+        elif hometown:
+            result = check_admissions_hit(
+                first_name,
+                last_name,
+                hometown,
+                state,
+                debug=show_debug
+            )
+        else:
+            return {
+                'statusCode': 400,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
                     'error': {'code': '400', 'message': 'Either hometown or county must be provided'}
-                }).encode())
-                return
+                })
+            }
 
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps(result).encode())
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps(result)
+        }
 
-        except Exception as e:
-            self.send_response(500)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps({
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
                 'error': {'code': '500', 'message': str(e)}
-            }).encode())
-
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
-
+            })
+        }
