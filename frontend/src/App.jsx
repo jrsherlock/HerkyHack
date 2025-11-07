@@ -127,13 +127,13 @@ function App() {
                       <li>County: Scan entire county database</li>
                     </ul>
                   </li>
-                  <li>Click "pwn — I mean, check — admissions" to query the database</li>
-                  <li>If your identity is found: Oh no! You've been admitted!</li>
+                  <li>Click "pwned?" to query the admissions database</li>
+                  <li>Cross your fingers that you've been pwned (admitted)!</li>
                 </ol>
               </div>
 
-              <div className="p-3 bg-blue-50 rounded-lg text-sm">
-                <p className="font-semibold mb-2">⚠️ Warning: If your name appears in the database, your identity may have been compromised... with an acceptance letter.</p>
+              <div className="p-3 bg-iowa-gold bg-opacity-20 rounded-lg text-sm">
+                <p className="font-semibold mb-2">🎓 If your name appears in the database, congratulations — you've been pwned with an acceptance letter!</p>
               </div>
             </div>
           )}
@@ -310,18 +310,27 @@ function App() {
         {result && (
           <div className={result.hit_found ? 'success-box' : 'error-box'}>
             <h2 className={`text-2xl font-bold mb-4 ${result.hit_found ? 'text-green-800' : 'text-red-800'}`}>
-              {result.hit_found ? '⚠️ Oh no — been admitted!' : '✓ Good news — no admission found'}
+              {result.hit_found ? '🎉 Pwned! You\'ve been admitted!' : '😔 Safe... you\'re not in the database'}
             </h2>
 
             <div className="space-y-3">
               {result.hit_found && (
-                <div className="p-4 bg-orange-50 border-l-4 border-orange-500 mb-4">
-                  <p className="text-gray-800 font-semibold">
-                    Identity Compromised: <strong>{result.first_name} {result.last_name}</strong>
+                <div className="p-4 bg-green-50 border-l-4 border-iowa-gold mb-4">
+                  <p className="text-gray-800 font-semibold text-lg">
+                    🎓 Congratulations, <strong>{result.first_name} {result.last_name}</strong>!
                   </p>
                   <p className="text-gray-700 text-sm mt-1">
-                    Your identity has been found in the Iowa's Premium Institute of Higher Learning admissions database.
-                    An acceptance letter may have been generated with your information.
+                    Your identity has been found in Iowa's Premium Institute of Higher Learning admissions database.
+                    You've been pwned... with an acceptance letter! 🎊
+                  </p>
+                </div>
+              )}
+
+              {!result.hit_found && (
+                <div className="p-4 bg-gray-50 border-l-4 border-gray-400 mb-4">
+                  <p className="text-gray-700 text-sm">
+                    No records found matching your information. You're safe from admission... for now.
+                    Try checking again later or verify your information is correct.
                   </p>
                 </div>
               )}
@@ -359,13 +368,13 @@ function App() {
 
               {result.hit_found && result.mp4_link && (
                 <>
-                  <div className="mt-4 p-4 bg-red-50 border-2 border-red-300 rounded-xl">
-                    <p className="text-gray-800 font-semibold mb-2">⚠️ Compromised Data Preview</p>
-                    <p className="text-gray-600 text-sm">A personalized admissions video was found associated with your identity. View the compromised content below:</p>
+                  <div className="mt-4 p-4 bg-iowa-gold bg-opacity-20 border-2 border-iowa-gold rounded-xl">
+                    <p className="text-gray-800 font-semibold mb-2">🎥 Your Admission "Breach" Video</p>
+                    <p className="text-gray-600 text-sm">The "compromised data" includes a personalized admissions video just for you. Watch your pwn-notice below!</p>
                   </div>
 
                   {/* Video Player */}
-                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg border-2 border-gray-300">
+                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg border-2 border-iowa-gold">
                     <video controls className="w-full" preload="metadata">
                       <source src={result.mp4_link} type="video/mp4" />
                       Your browser does not support the video tag.
@@ -377,7 +386,7 @@ function App() {
                     onClick={handleDownload}
                     className="btn-secondary mt-4"
                   >
-                    💾 Download Evidence
+                    💾 Download Your Pwn Notice
                   </button>
                 </>
               )}

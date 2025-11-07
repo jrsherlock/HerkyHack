@@ -2,16 +2,16 @@
 
 A tongue-in-cheek web application inspired by Have I Been Pwned that lets you check if your identity appears in Iowa's Premium Institute of Higher Learning admissions database.
 
-**⚠️ Oh no!** If your name is found, your identity may have been compromised... with an acceptance letter.
+**🎉 Cross your fingers!** If your name is found, you've been pwned... with an acceptance letter!
 
 ## ✨ Features
 
-- **🎨 HaveIBeenPwned-Inspired Design**: Dramatic security-breach aesthetic with Old Gold and Black UI
+- **🎨 HaveIBeenPwned-Inspired Design**: Playful security-breach aesthetic with Old Gold and Black UI
 - **🔍 Database Lookup**: Enter your identifying information to scan the admissions database
 - **🏛️ County Database Scan**: Don't know your exact city? We'll scan the entire county database
-- **⚠️ Breach Notifications**: Dramatic alerts if your identity is found (you've been admitted!)
-- **📹 Evidence Preview**: View the "compromised data" (your personalized admissions video)
-- **💾 Download Evidence**: Save proof of your identity breach (acceptance)
+- **🎉 Pwned Notifications**: Celebratory alerts if your identity is found (you've been admitted!)
+- **📹 Pwn Notice Video**: View your "compromised data" (personalized admissions video)
+- **💾 Download Your Pwn**: Save your admission "breach" notification
 - **🐛 Debug Mode**: Technical details of the database lookup (optional)
 - **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast database queries
 
@@ -87,8 +87,8 @@ Frontend will run on: **http://localhost:3000**
 4. **Click "🔍 pwned?"** to query the admissions database
 
 5. **Check the results:**
-   - ⚠️ **Oh no — been admitted!** Your identity was found. View the compromised data.
-   - ✓ **Good news — no admission found** You're safe... for now.
+   - 🎉 **Pwned! You've been admitted!** Your identity was found in the database. Celebrate and watch your pwn notice video!
+   - 😔 **Safe... you're not in the database** No admission found. Better luck next time.
 
 ## 💡 Example Searches
 
