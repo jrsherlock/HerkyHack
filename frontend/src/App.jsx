@@ -35,17 +35,17 @@ function App() {
     setResult(null)
 
     if (!firstName || !lastName || !state) {
-      setError('Please fill in first name, last name, and state')
+      setError('Missing required identity information — please provide name and state')
       return
     }
 
     if (searchMethod === 'direct' && !hometown) {
-      setError('Please enter a hometown')
+      setError('Location data required — please specify your hometown')
       return
     }
 
     if (searchMethod === 'county' && !selectedCounty) {
-      setError('Please select a county')
+      setError('County selection required to scan database')
       return
     }
 
@@ -97,11 +97,11 @@ function App() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 mt-4">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3 drop-shadow-lg">
-            🎓 UIowa Video Finder
+          <h1 className="text-4xl sm:text-5xl font-bold text-iowa-gold mb-3 drop-shadow-lg">
+            Have I Been Admitted?
           </h1>
-          <p className="text-white text-lg sm:text-xl opacity-90">
-            Find University of Iowa admissions videos
+          <p className="text-iowa-gold text-lg sm:text-xl opacity-90">
+            Check if your identity appears in the admissions database
           </p>
         </div>
 
@@ -118,28 +118,22 @@ function App() {
           {showInstructions && (
             <div className="mt-4 space-y-3 text-gray-700">
               <div className="p-3 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold mb-2">How to use:</h3>
+                <h3 className="font-semibold mb-2">How the database lookup works:</h3>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
-                  <li>Enter student's first and last name</li>
-                  <li>Choose search method:
+                  <li>Enter your identifying information (name and location)</li>
+                  <li>Select your search method:
                     <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Direct: Enter hometown directly</li>
-                      <li>County: Select a county to search all cities</li>
+                      <li>Direct: Provide exact city for faster lookup</li>
+                      <li>County: Scan entire county database</li>
                     </ul>
                   </li>
-                  <li>Click "Search for Video"</li>
-                  <li>View and download the video if found</li>
+                  <li>Click "pwned?" to query the admissions database</li>
+                  <li>Cross your fingers that you've been pwned (admitted)!</li>
                 </ol>
               </div>
 
-              <div className="p-3 bg-blue-50 rounded-lg text-sm">
-                <h3 className="font-semibold mb-2">Example:</h3>
-                <p><strong>Direct Method:</strong></p>
-                <p className="ml-3">First: jack, Last: edwards</p>
-                <p className="ml-3">Hometown: Iowa City, State: IA</p>
-                <p className="mt-2"><strong>County Method:</strong></p>
-                <p className="ml-3">First: seth, Last: weibel</p>
-                <p className="ml-3">County: Polk County, State: IA</p>
+              <div className="p-3 bg-iowa-gold bg-opacity-20 rounded-lg text-sm">
+                <p className="font-semibold mb-2">🎓 If your name appears in the database, congratulations — you've been pwned with an acceptance letter!</p>
               </div>
             </div>
           )}
@@ -157,7 +151,7 @@ function App() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Enter first name"
+                  placeholder="Your first name"
                   className="input-field"
                   required
                 />
@@ -171,7 +165,7 @@ function App() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Enter last name"
+                  placeholder="Your last name"
                   className="input-field"
                   required
                 />
@@ -185,7 +179,7 @@ function App() {
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value.toUpperCase())}
-                  placeholder="Enter state (e.g., IA, IL)"
+                  placeholder="Your state (e.g., IA, IL)"
                   className="input-field"
                   maxLength="2"
                   required
@@ -226,13 +220,13 @@ function App() {
               {searchMethod === 'direct' ? (
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Hometown *
+                    Your Hometown *
                   </label>
                   <input
                     type="text"
                     value={hometown}
                     onChange={(e) => setHometown(e.target.value)}
-                    placeholder="Enter hometown"
+                    placeholder="Your hometown"
                     className="input-field"
                     required={searchMethod === 'direct'}
                   />
@@ -240,7 +234,7 @@ function App() {
               ) : (
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    County *
+                    Your County *
                   </label>
                   <select
                     value={selectedCounty}
@@ -248,7 +242,7 @@ function App() {
                     className="input-field"
                     required={searchMethod === 'county'}
                   >
-                    <option value="">Select a county...</option>
+                    <option value="">Select your county...</option>
                     {counties.map((county) => (
                       <option key={county.name} value={county.name}>
                         {county.name} ({county.city_count} cities)
@@ -257,7 +251,7 @@ function App() {
                   </select>
                   {selectedCounty && (
                     <p className="mt-2 text-sm text-blue-600">
-                      📍 Will search through all cities in {selectedCounty} County
+                      📍 We'll search all cities in {selectedCounty} County for you
                     </p>
                   )}
                 </div>
@@ -296,10 +290,10 @@ function App() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Searching...
+                  Scanning database...
                 </span>
               ) : (
-                '🎯 Search for Video'
+                '🔍 pwned?'
               )}
             </button>
           </form>
@@ -316,21 +310,42 @@ function App() {
         {result && (
           <div className={result.hit_found ? 'success-box' : 'error-box'}>
             <h2 className={`text-2xl font-bold mb-4 ${result.hit_found ? 'text-green-800' : 'text-red-800'}`}>
-              {result.hit_found ? '✅ Video Found!' : '❌ No Video Found'}
+              {result.hit_found ? '🎉 Pwned! You\'ve been admitted!' : '😔 Safe... you\'re not in the database'}
             </h2>
 
             <div className="space-y-3">
+              {result.hit_found && (
+                <div className="p-4 bg-green-50 border-l-4 border-iowa-gold mb-4">
+                  <p className="text-gray-800 font-semibold text-lg">
+                    🎓 Congratulations, <strong>{result.first_name} {result.last_name}</strong>!
+                  </p>
+                  <p className="text-gray-700 text-sm mt-1">
+                    Your identity has been found in Iowa's Premium Institute of Higher Learning admissions database.
+                    You've been pwned... with an acceptance letter! 🎊
+                  </p>
+                </div>
+              )}
+
+              {!result.hit_found && (
+                <div className="p-4 bg-gray-50 border-l-4 border-gray-400 mb-4">
+                  <p className="text-gray-700 text-sm">
+                    No records found matching your information. You're safe from admission... for now.
+                    Try checking again later or verify your information is correct.
+                  </p>
+                </div>
+              )}
+
               <p className="text-gray-800">
-                <strong>Student:</strong> {result.first_name} {result.last_name}
+                <strong>Identity:</strong> {result.first_name} {result.last_name}
               </p>
               <p className="text-gray-800">
-                <strong>Hometown:</strong> {result.hometown}
+                <strong>Location Data:</strong> {result.hometown}
               </p>
 
               {result.county_searched && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    🏛️ Searched in <strong>{result.county_searched} County</strong>
+                    🔍 Database scan: <strong>{result.county_searched} County</strong>
                   </p>
                 </div>
               )}
@@ -338,7 +353,7 @@ function App() {
               {result.city_found && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    📍 Found city: <strong>{result.city_found}</strong> (tried {result.cities_tried} of {result.total_cities} cities)
+                    📍 Located in database: <strong>{result.city_found}</strong> (scanned {result.cities_tried} of {result.total_cities} records)
                   </p>
                 </div>
               )}
@@ -346,22 +361,20 @@ function App() {
               {result.hometown_used && result.hometown_original && result.hometown_used !== result.hometown_original && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    💡 Used hometown format: <strong>'{result.hometown_used}'</strong> (original: '{result.hometown_original}')
+                    💾 Matched variation: <strong>'{result.hometown_used}'</strong>
                   </p>
                 </div>
               )}
 
               {result.hit_found && result.mp4_link && (
                 <>
-                  <p className="text-gray-800 break-all">
-                    <strong>MP4 Link:</strong>{' '}
-                    <a href={result.mp4_link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      {result.mp4_link}
-                    </a>
-                  </p>
+                  <div className="mt-4 p-4 bg-iowa-gold bg-opacity-20 border-2 border-iowa-gold rounded-xl">
+                    <p className="text-gray-800 font-semibold mb-2">🎥 Your Admission "Breach" Video</p>
+                    <p className="text-gray-600 text-sm">The "compromised data" includes a personalized admissions video just for you. Watch your pwn-notice below!</p>
+                  </div>
 
                   {/* Video Player */}
-                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg">
+                  <div className="mt-4 rounded-xl overflow-hidden shadow-lg border-2 border-iowa-gold">
                     <video controls className="w-full" preload="metadata">
                       <source src={result.mp4_link} type="video/mp4" />
                       Your browser does not support the video tag.
@@ -373,7 +386,7 @@ function App() {
                     onClick={handleDownload}
                     className="btn-secondary mt-4"
                   >
-                    💾 Download Video
+                    💾 Download Your Pwn Notice
                   </button>
                 </>
               )}
@@ -406,9 +419,10 @@ function App() {
         )}
 
         {/* Footer */}
-        <div className="text-center text-white text-sm mt-8 opacity-75">
-          <p>University of Iowa Admissions Video Finder</p>
-          <p className="mt-1">For educational and research purposes</p>
+        <div className="text-center text-iowa-gold text-sm mt-8 opacity-75">
+          <p>Have I Been Admitted?</p>
+          <p className="mt-1">Check if your identity appears in the admissions database</p>
+          <p className="mt-2 text-xs">A tongue-in-cheek tribute to Have I Been Pwned</p>
         </div>
       </div>
     </div>

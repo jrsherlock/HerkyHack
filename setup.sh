@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Setting up UIowa Admissions Video Finder..."
+echo "🚀 Setting up Admissions Video Finder..."
 
 # Check if Python is installed
 if ! command -v python3 &> /dev/null; then

@@ -1,17 +1,19 @@
-# 🎓 University of Iowa Admissions Video Finder
+# 🔍 Have I Been Admitted?
 
-A sleek, modern, mobile-first web application that helps you find and download student video profiles from the University of Iowa admissions portal.
+A tongue-in-cheek web application inspired by Have I Been Pwned that lets you check if your identity appears in Iowa's Premium Institute of Higher Learning admissions database.
+
+**🎉 Cross your fingers!** If your name is found, you've been pwned... with an acceptance letter!
 
 ## ✨ Features
 
-- **🎨 Modern Mobile-First Design**: Beautiful gradient UI with smooth animations and responsive layout
-- **🔍 Direct Hometown Search**: Enter a student's name and hometown directly to find their video
-- **🏛️ County-Based Search**: Select an Iowa county to automatically search through all cities in that county
-- **🔄 Smart Permutation Handling**: Automatically tries multiple formatting variations of hometown names
-- **📹 Video Player**: Watch videos directly in the browser
-- **💾 Easy Downloads**: Download videos with a single click
-- **🐛 Debug Mode**: Detailed debug output showing all search attempts, HTTP requests, and responses
-- **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast performance
+- **🎨 HaveIBeenPwned-Inspired Design**: Playful security-breach aesthetic with Old Gold and Black UI
+- **🔍 Database Lookup**: Enter your identifying information to scan the admissions database
+- **🏛️ County Database Scan**: Don't know your exact city? We'll scan the entire county database
+- **🎉 Pwned Notifications**: Celebratory alerts if your identity is found (you've been admitted!)
+- **📹 Pwn Notice Video**: View your "compromised data" (personalized admissions video)
+- **💾 Download Your Pwn**: Save your admission "breach" notification
+- **🐛 Debug Mode**: Technical details of the database lookup (optional)
+- **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast database queries
 
 ## 🏗️ Architecture
 
@@ -73,30 +75,32 @@ Frontend will run on: **http://localhost:3000**
 
 1. **Open the app** in your browser at http://localhost:3000
 
-2. **Enter student information:**
-   - First Name
-   - Last Name
+2. **Enter your identifying information:**
+   - First name
+   - Last name
    - State (typically "IA" for Iowa)
 
-3. **Choose search method:**
-   - **Direct**: Enter hometown directly (e.g., "Iowa City")
-   - **County Search**: Select a county from the dropdown to search all cities in that county
+3. **Choose database lookup method:**
+   - **Direct**: Provide exact city for faster database query
+   - **County Database Scan**: Select your county to scan all records in that region
 
-4. **Click "Search for Video"** to find the student's video
+4. **Click "🔍 pwned?"** to query the admissions database
 
-5. **View and download** the video if found
+5. **Check the results:**
+   - 🎉 **Pwned! You've been admitted!** Your identity was found in the database. Celebrate and watch your pwn notice video!
+   - 😔 **Safe... you're not in the database** No admission found. Better luck next time.
 
 ## 💡 Example Searches
 
 ### Direct Method
-- **First Name:** jack
-- **Last Name:** edwards
+- **First Name:** john
+- **Last Name:** doe
 - **Hometown:** Iowa City
 - **State:** IA
 
 ### County Method
-- **First Name:** seth
-- **Last Name:** weibel
+- **First Name:** jane
+- **Last Name:** smith
 - **County:** Polk County
 - **State:** IA
 
@@ -143,10 +147,10 @@ npm run build
 
 ## 🎨 Design Highlights
 
-- **Gradient Background**: Beautiful purple gradient for visual appeal
+- **Old Gold & Black Theme**: Classic Iowa colors for a professional look
 - **Card-Based Layout**: Clean, organized content sections
 - **Responsive Design**: Works perfectly on mobile, tablet, and desktop
-- **Iowa Colors**: Yellow/gold accent colors matching Iowa branding
+- **Iowa Branding**: Old Gold (#FFCD00) and Black (#000000) color scheme
 - **Smooth Animations**: Subtle transitions and hover effects
 - **Accessible**: Proper labels, semantic HTML, and keyboard navigation
 
@@ -173,7 +177,7 @@ Search for a student's video
 
 ## 🤝 How It Works
 
-1. **URL Construction**: Generates URLs for the UIowa admissions portal
+1. **URL Construction**: Generates URLs for the admissions portal
 2. **Permutation Generation**: Creates multiple hometown format variations
 3. **Cache Check**: Uses HTTP headers to quickly detect hits
 4. **MP4 Verification**: Confirms video file accessibility
@@ -199,4 +203,4 @@ Built with:
 
 ---
 
-Made with ❤️ for the University of Iowa community
+Made with ❤️ for Iowa's Premium Institute of Higher Learning community

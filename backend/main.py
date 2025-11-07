@@ -295,7 +295,7 @@ def search_with_city_iteration(first_name: str, last_name: str, state: str, citi
 
 @app.get("/")
 async def root():
-    return {"message": "UIowa Admissions Video Finder API"}
+    return {"message": "Admissions Video Finder API"}
 
 @app.get("/api/counties")
 async def get_counties():
