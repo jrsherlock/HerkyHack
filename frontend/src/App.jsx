@@ -135,10 +135,10 @@ function App() {
               <div className="p-3 bg-blue-50 rounded-lg text-sm">
                 <h3 className="font-semibold mb-2">Example:</h3>
                 <p><strong>Direct Method:</strong></p>
-                <p className="ml-3">First: jack, Last: edwards</p>
+                <p className="ml-3">First: john, Last: doe</p>
                 <p className="ml-3">Hometown: Iowa City, State: IA</p>
                 <p className="mt-2"><strong>County Method:</strong></p>
-                <p className="ml-3">First: seth, Last: weibel</p>
+                <p className="ml-3">First: jane, Last: smith</p>
                 <p className="ml-3">County: Polk County, State: IA</p>
               </div>
             </div>

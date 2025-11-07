@@ -89,14 +89,14 @@ Frontend will run on: **http://localhost:3000**
 ## 💡 Example Searches
 
 ### Direct Method
-- **First Name:** jack
-- **Last Name:** edwards
+- **First Name:** john
+- **Last Name:** doe
 - **Hometown:** Iowa City
 - **State:** IA
 
 ### County Method
-- **First Name:** seth
-- **Last Name:** weibel
+- **First Name:** jane
+- **Last Name:** smith
 - **County:** Polk County
 - **State:** IA
 
