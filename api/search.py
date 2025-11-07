@@ -88,15 +88,8 @@ def generate_hometown_permutations(hometown: str):
 
     return unique_permutations
 
-def fast_check_cache_hit(url: str, timeout=5):
-    """Fast check for cache hit using X-Cache header."""
-    try:
-        response = requests.get(url, timeout=timeout)
-        cache_header = response.headers.get('X-Cache', '').lower()
-        is_hit = 'hit' in cache_header
-        return is_hit, response
-    except requests.exceptions.RequestException:
-        return False, None
+# Removed fast_check_cache_hit - cache headers are unreliable
+# Always check MP4 files directly for consistent results
 
 def check_admissions_hit(first_name: str, last_name: str, hometown: str, state: str, debug: bool = False):
     """Check if a name and hometown combination results in a hit."""
@@ -118,22 +111,11 @@ def check_admissions_hit(first_name: str, last_name: str, hometown: str, state: 
         url = f"https://your.admissions.uiowa.edu/?first={first_name.lower()}&last={last_name.lower()}&home={home_param}"
 
         try:
-            is_cache_hit, response = fast_check_cache_hit(url, timeout=5)
-
-            if not response:
-                if debug:
-                    debug_info += f"Request failed for '{hometown_perm}', trying next...\n\n"
-                continue
-
-            if not is_cache_hit:
-                if debug:
-                    debug_info += f"Cache miss for '{hometown_perm}', skipping MP4 check...\n\n"
-                continue
-
             expected_mp4_url, expected_filename = generate_mp4_url(first_name, last_name, hometown_perm, state)
             if debug:
                 debug_info += f"Generated MP4 URL: {expected_mp4_url}\n"
 
+            # Always check MP4 accessibility directly - don't rely on cache headers
             mp4_accessible, mp4_error = check_mp4_accessibility(expected_mp4_url)
 
             if mp4_accessible:
