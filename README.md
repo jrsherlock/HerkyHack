@@ -1,16 +1,16 @@
-# 🎓 Admissions Video Finder
+# 🎓 Your Admissions Video
 
-A sleek, modern, mobile-first web application that helps you find and download student video profiles from Iowa's Premium Institute of Higher Learning admissions portal.
+A sleek, modern, mobile-first web application that allows you to check your admission status and view your personalized admissions video from Iowa's Premium Institute of Higher Learning.
 
 ## ✨ Features
 
 - **🎨 Modern Mobile-First Design**: Clean Old Gold and Black UI with smooth animations and responsive layout
-- **🔍 Direct Hometown Search**: Enter a student's name and hometown directly to find their video
-- **🏛️ County-Based Search**: Select an Iowa county to automatically search through all cities in that county
-- **🔄 Smart Permutation Handling**: Automatically tries multiple formatting variations of hometown names
-- **📹 Video Player**: Watch videos directly in the browser
-- **💾 Easy Downloads**: Download videos with a single click
-- **🐛 Debug Mode**: Detailed debug output showing all search attempts, HTTP requests, and responses
+- **🔍 Easy Search**: Enter your name and hometown to check your admission status
+- **🏛️ County Search Option**: Not sure of your city? Search by county and we'll check all cities for you
+- **🎉 Personalized Experience**: Congratulatory message and personalized video if you've been admitted
+- **📹 Video Player**: Watch your custom admissions video directly in the browser
+- **💾 Easy Downloads**: Download your video to keep and share
+- **🐛 Debug Mode**: Technical details for troubleshooting (optional)
 - **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast performance
 
 ## 🏗️ Architecture
@@ -73,18 +73,18 @@ Frontend will run on: **http://localhost:3000**
 
 1. **Open the app** in your browser at http://localhost:3000
 
-2. **Enter student information:**
-   - First Name
-   - Last Name
-   - State (typically "IA" for Iowa)
+2. **Enter your information:**
+   - Your first name
+   - Your last name
+   - Your state (typically "IA" for Iowa)
 
-3. **Choose search method:**
-   - **Direct**: Enter hometown directly (e.g., "Iowa City")
-   - **County Search**: Select a county from the dropdown to search all cities in that county
+3. **Choose your search method:**
+   - **Direct**: If you know your city, enter it directly (e.g., "Iowa City")
+   - **County Search**: Not sure? Select your county and we'll search all cities for you
 
-4. **Click "Search for Video"** to find the student's video
+4. **Click "Find My Video"** to check your admission status
 
-5. **View and download** the video if found
+5. **If admitted:** Celebrate and watch your personalized admissions video!
 
 ## 💡 Example Searches
 

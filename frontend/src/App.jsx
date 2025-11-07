@@ -35,17 +35,17 @@ function App() {
     setResult(null)
 
     if (!firstName || !lastName || !state) {
-      setError('Please fill in first name, last name, and state')
+      setError('Please enter your first name, last name, and state')
       return
     }
 
     if (searchMethod === 'direct' && !hometown) {
-      setError('Please enter a hometown')
+      setError('Please enter your hometown')
       return
     }
 
     if (searchMethod === 'county' && !selectedCounty) {
-      setError('Please select a county')
+      setError('Please select your county')
       return
     }
 
@@ -98,10 +98,10 @@ function App() {
         {/* Header */}
         <div className="text-center mb-8 mt-4">
           <h1 className="text-4xl sm:text-5xl font-bold text-iowa-gold mb-3 drop-shadow-lg">
-            🎓 Admissions Video Finder
+            🎓 Your Admissions Video
           </h1>
           <p className="text-iowa-gold text-lg sm:text-xl opacity-90">
-            Find Iowa's Premium Institute of Higher Learning admissions videos
+            Check your admission status and view your personalized video
           </p>
         </div>
 
@@ -118,28 +118,22 @@ function App() {
           {showInstructions && (
             <div className="mt-4 space-y-3 text-gray-700">
               <div className="p-3 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold mb-2">How to use:</h3>
+                <h3 className="font-semibold mb-2">How it works:</h3>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
-                  <li>Enter student's first and last name</li>
-                  <li>Choose search method:
+                  <li>Enter your first and last name</li>
+                  <li>Enter your hometown information:
                     <ul className="list-disc list-inside ml-6 mt-1">
-                      <li>Direct: Enter hometown directly</li>
-                      <li>County: Select a county to search all cities</li>
+                      <li>Direct: If you know your city, enter it directly</li>
+                      <li>County: Not sure? Select your county to search</li>
                     </ul>
                   </li>
-                  <li>Click "Search for Video"</li>
-                  <li>View and download the video if found</li>
+                  <li>Click "Find My Video" to check your admission</li>
+                  <li>If admitted, watch and download your personalized video!</li>
                 </ol>
               </div>
 
               <div className="p-3 bg-blue-50 rounded-lg text-sm">
-                <h3 className="font-semibold mb-2">Example:</h3>
-                <p><strong>Direct Method:</strong></p>
-                <p className="ml-3">First: john, Last: doe</p>
-                <p className="ml-3">Hometown: Iowa City, State: IA</p>
-                <p className="mt-2"><strong>County Method:</strong></p>
-                <p className="ml-3">First: jane, Last: smith</p>
-                <p className="ml-3">County: Polk County, State: IA</p>
+                <p className="font-semibold mb-2">💡 Tip: If you're not sure of your exact city name, use the County search method to check all cities in your county automatically.</p>
               </div>
             </div>
           )}
@@ -157,7 +151,7 @@ function App() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Enter first name"
+                  placeholder="Your first name"
                   className="input-field"
                   required
                 />
@@ -171,7 +165,7 @@ function App() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Enter last name"
+                  placeholder="Your last name"
                   className="input-field"
                   required
                 />
@@ -185,7 +179,7 @@ function App() {
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value.toUpperCase())}
-                  placeholder="Enter state (e.g., IA, IL)"
+                  placeholder="Your state (e.g., IA, IL)"
                   className="input-field"
                   maxLength="2"
                   required
@@ -226,13 +220,13 @@ function App() {
               {searchMethod === 'direct' ? (
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Hometown *
+                    Your Hometown *
                   </label>
                   <input
                     type="text"
                     value={hometown}
                     onChange={(e) => setHometown(e.target.value)}
-                    placeholder="Enter hometown"
+                    placeholder="Your hometown"
                     className="input-field"
                     required={searchMethod === 'direct'}
                   />
@@ -240,7 +234,7 @@ function App() {
               ) : (
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    County *
+                    Your County *
                   </label>
                   <select
                     value={selectedCounty}
@@ -248,7 +242,7 @@ function App() {
                     className="input-field"
                     required={searchMethod === 'county'}
                   >
-                    <option value="">Select a county...</option>
+                    <option value="">Select your county...</option>
                     {counties.map((county) => (
                       <option key={county.name} value={county.name}>
                         {county.name} ({county.city_count} cities)
@@ -257,7 +251,7 @@ function App() {
                   </select>
                   {selectedCounty && (
                     <p className="mt-2 text-sm text-blue-600">
-                      📍 Will search through all cities in {selectedCounty} County
+                      📍 We'll search all cities in {selectedCounty} County for you
                     </p>
                   )}
                 </div>
@@ -296,10 +290,10 @@ function App() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Searching...
+                  Checking...
                 </span>
               ) : (
-                '🎯 Search for Video'
+                '🎓 Find My Video'
               )}
             </button>
           </form>
@@ -316,12 +310,18 @@ function App() {
         {result && (
           <div className={result.hit_found ? 'success-box' : 'error-box'}>
             <h2 className={`text-2xl font-bold mb-4 ${result.hit_found ? 'text-green-800' : 'text-red-800'}`}>
-              {result.hit_found ? '✅ Video Found!' : '❌ No Video Found'}
+              {result.hit_found ? '🎉 Congratulations! You\'ve Been Admitted!' : '❌ Video Not Found'}
             </h2>
 
             <div className="space-y-3">
+              {result.hit_found && (
+                <p className="text-gray-800 text-lg">
+                  Welcome to Iowa's Premium Institute of Higher Learning, <strong>{result.first_name}</strong>!
+                </p>
+              )}
+
               <p className="text-gray-800">
-                <strong>Student:</strong> {result.first_name} {result.last_name}
+                <strong>Name:</strong> {result.first_name} {result.last_name}
               </p>
               <p className="text-gray-800">
                 <strong>Hometown:</strong> {result.hometown}
@@ -338,7 +338,7 @@ function App() {
               {result.city_found && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    📍 Found city: <strong>{result.city_found}</strong> (tried {result.cities_tried} of {result.total_cities} cities)
+                    📍 Found your city: <strong>{result.city_found}</strong> (searched {result.cities_tried} of {result.total_cities} cities)
                   </p>
                 </div>
               )}
@@ -346,19 +346,17 @@ function App() {
               {result.hometown_used && result.hometown_original && result.hometown_used !== result.hometown_original && (
                 <div className="info-box">
                   <p className="text-blue-800">
-                    💡 Used hometown format: <strong>'{result.hometown_used}'</strong> (original: '{result.hometown_original}')
+                    💡 Matched using: <strong>'{result.hometown_used}'</strong>
                   </p>
                 </div>
               )}
 
               {result.hit_found && result.mp4_link && (
                 <>
-                  <p className="text-gray-800 break-all">
-                    <strong>MP4 Link:</strong>{' '}
-                    <a href={result.mp4_link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                      {result.mp4_link}
-                    </a>
-                  </p>
+                  <div className="mt-4 p-4 bg-iowa-gold bg-opacity-10 border-2 border-iowa-gold rounded-xl">
+                    <p className="text-gray-800 font-semibold mb-2">🎥 Your Personalized Admissions Video</p>
+                    <p className="text-gray-600 text-sm">Watch your custom video message below!</p>
+                  </div>
 
                   {/* Video Player */}
                   <div className="mt-4 rounded-xl overflow-hidden shadow-lg">
@@ -373,7 +371,7 @@ function App() {
                     onClick={handleDownload}
                     className="btn-secondary mt-4"
                   >
-                    💾 Download Video
+                    💾 Download Your Video
                   </button>
                 </>
               )}
@@ -407,8 +405,8 @@ function App() {
 
         {/* Footer */}
         <div className="text-center text-iowa-gold text-sm mt-8 opacity-75">
-          <p>Iowa's Premium Institute of Higher Learning Admissions Video Finder</p>
-          <p className="mt-1">For educational and research purposes</p>
+          <p>Iowa's Premium Institute of Higher Learning</p>
+          <p className="mt-1">Check your admission status anytime</p>
         </div>
       </div>
     </div>
