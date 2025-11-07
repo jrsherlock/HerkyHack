@@ -97,11 +97,11 @@ function App() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 mt-4">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3 drop-shadow-lg">
-            🎓 UIowa Video Finder
+          <h1 className="text-4xl sm:text-5xl font-bold text-iowa-gold mb-3 drop-shadow-lg">
+            🎓 Admissions Video Finder
           </h1>
-          <p className="text-white text-lg sm:text-xl opacity-90">
-            Find University of Iowa admissions videos
+          <p className="text-iowa-gold text-lg sm:text-xl opacity-90">
+            Find Iowa's Premium Institute of Higher Learning admissions videos
           </p>
         </div>
 
@@ -406,8 +406,8 @@ function App() {
         )}
 
         {/* Footer */}
-        <div className="text-center text-white text-sm mt-8 opacity-75">
-          <p>University of Iowa Admissions Video Finder</p>
+        <div className="text-center text-iowa-gold text-sm mt-8 opacity-75">
+          <p>Iowa's Premium Institute of Higher Learning Admissions Video Finder</p>
           <p className="mt-1">For educational and research purposes</p>
         </div>
       </div>

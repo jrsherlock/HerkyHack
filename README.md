@@ -1,10 +1,10 @@
-# 🎓 University of Iowa Admissions Video Finder
+# 🎓 Admissions Video Finder
 
-A sleek, modern, mobile-first web application that helps you find and download student video profiles from the University of Iowa admissions portal.
+A sleek, modern, mobile-first web application that helps you find and download student video profiles from Iowa's Premium Institute of Higher Learning admissions portal.
 
 ## ✨ Features
 
-- **🎨 Modern Mobile-First Design**: Beautiful gradient UI with smooth animations and responsive layout
+- **🎨 Modern Mobile-First Design**: Clean Old Gold and Black UI with smooth animations and responsive layout
 - **🔍 Direct Hometown Search**: Enter a student's name and hometown directly to find their video
 - **🏛️ County-Based Search**: Select an Iowa county to automatically search through all cities in that county
 - **🔄 Smart Permutation Handling**: Automatically tries multiple formatting variations of hometown names
@@ -143,10 +143,10 @@ npm run build
 
 ## 🎨 Design Highlights
 
-- **Gradient Background**: Beautiful purple gradient for visual appeal
+- **Old Gold & Black Theme**: Classic Iowa colors for a professional look
 - **Card-Based Layout**: Clean, organized content sections
 - **Responsive Design**: Works perfectly on mobile, tablet, and desktop
-- **Iowa Colors**: Yellow/gold accent colors matching Iowa branding
+- **Iowa Branding**: Old Gold (#FFCD00) and Black (#000000) color scheme
 - **Smooth Animations**: Subtle transitions and hover effects
 - **Accessible**: Proper labels, semantic HTML, and keyboard navigation
 
@@ -173,7 +173,7 @@ Search for a student's video
 
 ## 🤝 How It Works
 
-1. **URL Construction**: Generates URLs for the UIowa admissions portal
+1. **URL Construction**: Generates URLs for the admissions portal
 2. **Permutation Generation**: Creates multiple hometown format variations
 3. **Cache Check**: Uses HTTP headers to quickly detect hits
 4. **MP4 Verification**: Confirms video file accessibility
@@ -199,4 +199,4 @@ Built with:
 
 ---
 
-Made with ❤️ for the University of Iowa community
+Made with ❤️ for Iowa's Premium Institute of Higher Learning community
