@@ -1,72 +1,202 @@
-# University of Iowa Admissions Video Finder
+# 🎓 University of Iowa Admissions Video Finder
 
-A Streamlit web application that helps you find and download student video profiles from the University of Iowa admissions portal.
+A sleek, modern, mobile-first web application that helps you find and download student video profiles from the University of Iowa admissions portal.
 
-## Features
+## ✨ Features
 
-- **Direct Hometown Search**: Enter a student's name and hometown directly to find their video
-- **County-Based Search**: Select an Iowa county to automatically search through all cities in that county
-- **Smart Permutation Handling**: Automatically tries multiple formatting variations of hometown names to handle encoding and formatting differences
-- **Debug Information**: Detailed debug output showing all search attempts, HTTP requests, and responses
-- **Copy to Clipboard**: Easy copy functionality for debug information
-- **Video Download**: Download found videos directly from the application
+- **🎨 Modern Mobile-First Design**: Beautiful gradient UI with smooth animations and responsive layout
+- **🔍 Direct Hometown Search**: Enter a student's name and hometown directly to find their video
+- **🏛️ County-Based Search**: Select an Iowa county to automatically search through all cities in that county
+- **🔄 Smart Permutation Handling**: Automatically tries multiple formatting variations of hometown names
+- **📹 Video Player**: Watch videos directly in the browser
+- **💾 Easy Downloads**: Download videos with a single click
+- **🐛 Debug Mode**: Detailed debug output showing all search attempts, HTTP requests, and responses
+- **⚡ Fast & Responsive**: Built with React + Vite for lightning-fast performance
 
-## Requirements
+## 🏗️ Architecture
 
-- Python 3.10+
-- Streamlit >= 1.28.0
-- requests >= 2.31.0
-- pyperclip >= 1.8.2
+### Backend (FastAPI)
+- RESTful API for video search
+- County and city data management
+- MP4 URL generation and accessibility checking
+- Hometown permutation logic
 
-## Installation
+### Frontend (React + Vite + Tailwind CSS)
+- Modern, component-based UI
+- Mobile-first responsive design
+- Real-time search updates
+- Integrated video player
 
-1. Clone this repository:
+## 📋 Requirements
+
+- **Python 3.10+**
+- **Node.js 18+**
+- **npm or yarn**
+
+## 🚀 Quick Start
+
+### Option 1: Automated Setup (Recommended)
+
 ```bash
-git clone <repository-url>
-cd HerkyHack
+# Run the setup script to install all dependencies
+./setup.sh
+
+# Start both backend and frontend servers
+./start.sh
 ```
 
-2. Install dependencies:
+Then open your browser to: **http://localhost:3000**
+
+### Option 2: Manual Setup
+
+#### Backend Setup
+
 ```bash
+cd backend
 pip install -r requirements.txt
+python main.py
 ```
 
-## Usage
+Backend will run on: **http://localhost:8000**
 
-1. Run the Streamlit app:
+#### Frontend Setup
+
 ```bash
-streamlit run app.py
+cd frontend
+npm install
+npm run dev
 ```
 
-2. Open your browser to the URL shown (typically http://localhost:8501)
+Frontend will run on: **http://localhost:3000**
 
-3. Enter student information:
+## 📱 How to Use
+
+1. **Open the app** in your browser at http://localhost:3000
+
+2. **Enter student information:**
    - First Name
    - Last Name
    - State (typically "IA" for Iowa)
-   - Choose search method:
-     - **Direct**: Enter hometown directly
-     - **County Search**: Select a county from the dropdown to search all cities in that county
 
-4. Click "Search for Video" to find the student's video
+3. **Choose search method:**
+   - **Direct**: Enter hometown directly (e.g., "Iowa City")
+   - **County Search**: Select a county from the dropdown to search all cities in that county
 
-5. If found, you can view the video and download it using the download button
+4. **Click "Search for Video"** to find the student's video
 
-## How It Works
+5. **View and download** the video if found
 
-The application searches the University of Iowa admissions portal by constructing URLs with the student's information. It:
+## 💡 Example Searches
 
-1. Generates multiple permutations of the hometown name to handle formatting variations
-2. Checks for cache hits using HTTP headers for faster detection
-3. Verifies MP4 file accessibility
-4. Displays results with detailed debug information
+### Direct Method
+- **First Name:** jack
+- **Last Name:** edwards
+- **Hometown:** Iowa City
+- **State:** IA
 
-## Data Sources
+### County Method
+- **First Name:** seth
+- **Last Name:** weibel
+- **County:** Polk County
+- **State:** IA
+
+## 🛠️ Development
+
+### Project Structure
+
+```
+HerkyHack/
+├── backend/
+│   ├── main.py              # FastAPI server
+│   └── requirements.txt     # Python dependencies
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx         # Main React component
+│   │   ├── main.jsx        # React entry point
+│   │   └── index.css       # Tailwind CSS styles
+│   ├── index.html          # HTML template
+│   ├── package.json        # Node dependencies
+│   ├── vite.config.js      # Vite configuration
+│   ├── tailwind.config.js  # Tailwind configuration
+│   └── postcss.config.js   # PostCSS configuration
+├── city-county-mapping.csv  # Iowa cities/counties data
+├── setup.sh                 # Setup script
+├── start.sh                 # Start script
+└── README.md               # This file
+```
+
+### Building for Production
+
+#### Backend
+```bash
+cd backend
+# Use gunicorn or uvicorn for production
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+#### Frontend
+```bash
+cd frontend
+npm run build
+# Deploy the 'dist' folder to your hosting service
+```
+
+## 🎨 Design Highlights
+
+- **Gradient Background**: Beautiful purple gradient for visual appeal
+- **Card-Based Layout**: Clean, organized content sections
+- **Responsive Design**: Works perfectly on mobile, tablet, and desktop
+- **Iowa Colors**: Yellow/gold accent colors matching Iowa branding
+- **Smooth Animations**: Subtle transitions and hover effects
+- **Accessible**: Proper labels, semantic HTML, and keyboard navigation
+
+## 🔧 API Endpoints
+
+### GET `/api/counties`
+Get list of all Iowa counties with city counts
+
+### GET `/api/counties/{county}/cities`
+Get list of cities in a specific county
+
+### POST `/api/search`
+Search for a student's video
+```json
+{
+  "first_name": "string",
+  "last_name": "string",
+  "state": "string",
+  "hometown": "string (optional)",
+  "county": "string (optional)",
+  "show_debug": "boolean"
+}
+```
+
+## 🤝 How It Works
+
+1. **URL Construction**: Generates URLs for the UIowa admissions portal
+2. **Permutation Generation**: Creates multiple hometown format variations
+3. **Cache Check**: Uses HTTP headers to quickly detect hits
+4. **MP4 Verification**: Confirms video file accessibility
+5. **Result Display**: Shows video player and download options
+
+## 📊 Data Sources
 
 - `city-county-mapping.csv`: Contains mapping of Iowa cities to their counties
 - Used for county-based search functionality
 
-## License
+## 📄 License
 
 This project is for educational and research purposes.
 
+## 🙏 Credits
+
+Built with:
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Axios](https://axios-http.com/)
+
+---
+
+Made with ❤️ for the University of Iowa community
